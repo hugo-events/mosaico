@@ -86,19 +86,41 @@ ko.bindingHandlers.wysiwygSrc = {
     var placeholderValue = ko.utils.unwrapObservable(value.placeholder);
     var width = ko.utils.unwrapObservable(value.width);
     var height = ko.utils.unwrapObservable(value.height);
-    if ((attrValue === false) || (attrValue === null) || (attrValue === undefined) || (attrValue === '')) {
-      if (typeof placeholderValue == 'object' && placeholderValue !== null) element.setAttribute('src', ko.bindingHandlers.wysiwygSrc.placeholderUrl(placeholderValue.width, placeholderValue.height, placeholderValue.text));
-      else element.removeAttribute('src');
-    } else {
-      var method = ko.utils.unwrapObservable(value.method);
-      if (!method) method = width > 0 && height > 0 ? 'cover' : 'resize';
-      var src = ko.bindingHandlers.wysiwygSrc.convertedUrl(attrValue.toString(), method, width, height);
-      element.setAttribute('src', src);
-    }
-    if (typeof width !== 'undefined' && width !== null) element.setAttribute("width", width);
-    else element.removeAttribute("width");
-    if (typeof height !== 'undefined' && height !== null) element.setAttribute("height", height);
-    else element.removeAttribute("height");
+      if ((attrValue === false) || (attrValue === null) || (attrValue === undefined) || (attrValue === '')) {
+        if (typeof placeholderValue == 'object' && placeholderValue !== null) {
+          console.log('Firsst');
+          console.log(placeholderValue.width, placeholderValue.height, placeholderValue.text);
+          element.setAttribute('src', ko.bindingHandlers.wysiwygSrc.placeholderUrl(placeholderValue.width, placeholderValue.height, placeholderValue.text));
+        }
+        else {
+          console.log('Element : ' + element.src);
+          //element.removeAttribute('src');
+        }
+      } else {
+        console.log('Else');
+        console.log(attrValue.toString(), method, width, height);
+        var method = ko.utils.unwrapObservable(value.method);
+        if (!method) method = width > 0 && height > 0 ? 'cover' : 'resize';
+        var src = ko.bindingHandlers.wysiwygSrc.convertedUrl(attrValue.toString(), method, width, height);
+        console.log('src: ' + src);
+        element.setAttribute('src', src);
+      }
+      if (typeof width !== 'undefined' && width !== null){
+        console.log('setWidth : ' + width);
+        element.setAttribute("width", width);
+      }
+      else {
+        console.log('removeWidth ');
+       // element.removeAttribute("width");
+      }
+      if (typeof height !== 'undefined' && height !== null){
+        console.log('setHeight : ' + height);
+        element.setAttribute("height", height);
+      }
+      else {
+        console.log('removeheight ');
+        //element.removeAttribute("height");
+      }
   }
 };
 
@@ -142,7 +164,7 @@ ko.bindingHandlers.wysiwygImg = {
       var isWysiwygMode = (typeof bindingContext.templateMode != 'undefined' && bindingContext.templateMode == 'wysiwyg');
 
       var modelValue = valueAccessor(),
-        unwrappedValue = ko.utils.peekObservable(modelValue); // Unwrap without setting a dependency here
+          unwrappedValue = ko.utils.peekObservable(modelValue); // Unwrap without setting a dependency here
 
       // If unwrappedValue.data is the array, preserve all relevant options and unwrap again value so we get updates
       ko.utils.unwrapObservable(modelValue);
@@ -176,7 +198,7 @@ ko.bindingHandlers.wysiwyg = {
     plugins: ["link hr paste lists textcolor code"],
     // valid_elements: 'strong/b,em/i,*[*]',
     // extended_valid_elements: 'strong/b,em/i,*[*]',
-    // Removed: image fullscreen contextmenu 
+    // Removed: image fullscreen contextmenu
     // download custom:
     // jquery version con legacyoutput, anchor, code, importcss, link, paste, textcolor, hr, lists
   },
@@ -249,13 +271,13 @@ ko.bindingHandlers.wysiwyg = {
         });
 
         /* NOTE: disabling "ENTER" in tiny editor, not a good thing but may be needed to work around contenteditable issues
-        if (!fullEditor) {
-          // se non abbiamo il "full Editor", disabilitiamo l'invio. (vari bug)
-          editor.on('keydown', function(e) {
-            if (e.keyCode == 13) { e.preventDefault(); }
-          });
-        }
-        */
+         if (!fullEditor) {
+         // se non abbiamo il "full Editor", disabilitiamo l'invio. (vari bug)
+         editor.on('keydown', function(e) {
+         if (e.keyCode == 13) { e.preventDefault(); }
+         });
+         }
+         */
 
         thisEditor = editor;
 
