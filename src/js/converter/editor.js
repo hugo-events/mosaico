@@ -99,7 +99,7 @@ var _propInput = function(model, prop, propAccessor, editType, widgets) {
   } else if (widget == 'url') {
     html += '<div class="ui-textbutton">';
     // <a class="ui-spinner-button ui-spinner-down ui-corner-br ui-button ui-widget ui-state-default ui-button-text-only" tabindex="-1" role="button"><span class="ui-button-text"><span class="ui-icon fa fa-fw caret-down">▼</span></span></a>
-    html += '<input class="ui-textbutton-input" size="7" type="url" pattern="(mailto:.+@.+|https?://.+\\..+|\\[.*\\].*)" value="nothing" data-bind="css: { withButton: typeof $root.linkDialog !== \'undefined\' }, validatedValue: ' + propAccessor + ', ' + onfocusbinding + '" />';
+    html += '<input class="ui-textbutton-input" size="7" type="url" placeholder="http://" pattern="(mailto:.+@.+|https?://.+\\..+|\\[.*\\].*)" value="nothing" data-bind="css: { withButton: typeof $root.linkDialog !== \'undefined\' }, validatedValue: ' + propAccessor + ', ' + onfocusbinding + '" />';
     html += '<a class="ui-textbutton-button" data-bind="visible: typeof $root.linkDialog !== \'undefined\', click: typeof $root.linkDialog !== \'undefined\' ? $root.linkDialog.bind($element.previousSibling) : false, button: { icons: { primary: \'fa fa-fw fa-ellipsis-h\' }, label: \'Opzioni\', text: false }">Opzioni</a>';
     html += '</div>';
   } else if (widget == 'integer') {
@@ -135,7 +135,7 @@ var _propEditor = function(withBindingProvider, widgets, templateUrlConverter, m
   if (typeof level == 'undefined') level = 0;
 
   if (typeof prop !== 'undefined' && typeof model == 'object' && model !== null && typeof model._usecount === 'undefined') {
-    console.log("TODO EDITOR ignoring", path, "property because it is not used by the template", "prop:", prop, "type:", editType, "level:", level, withBindingProvider._templateName);
+    //console.log("TODO EDITOR ignoring", path, "property because it is not used by the template", "prop:", prop, "type:", editType, "level:", level, withBindingProvider._templateName);
     return "";
   }
 
@@ -149,7 +149,7 @@ var _propEditor = function(withBindingProvider, widgets, templateUrlConverter, m
   var ifSubsThreshold = 1;
 
   // The visibility handling is a PITA
-  // 
+  //
   // Here are some "edge cases" to test whenever we change something here:
   // LM social footer: removing shareVisibile must be reflected in the booleans sub-checks
   // FLUID social block: multiple clicks on the "wand" should not make the editor invisible
@@ -164,7 +164,7 @@ var _propEditor = function(withBindingProvider, widgets, templateUrlConverter, m
   }
 
   // NOTE baseThreshold is added only when globalStyle is not defined because when we have globalStyle
-  // we're going to bind the computed values and not the original and this way we don't add ourserf to the dependency 
+  // we're going to bind the computed values and not the original and this way we don't add ourserf to the dependency
   // tracking (subscriptionCount)
   // NOTE baseThreshold is an "expression" and not a fixed number, so this is a concatenation
   if (typeof globalStyleProp == 'undefined' && typeof baseThreshold !== 'undefined') ifSubsThreshold += baseThreshold;
@@ -175,10 +175,10 @@ var _propEditor = function(withBindingProvider, widgets, templateUrlConverter, m
 
   if (typeof prop != 'undefined' && (model === null || typeof model._name == 'undefined')) {
     // TODO throw exception?
-    console.log("TODO WARN Missing label for property ", prop);
+    //console.log("TODO WARN Missing label for property ", prop);
   }
   if (typeof prop == 'undefined' && model !== null && typeof model._name == 'undefined') {
-    console.log("TODO WARN Missing label for object ", model.type /*, model */ );
+    //console.log("TODO WARN Missing label for object ", model.type /*, model */ );
   }
 
   if (typeof model == 'object' && model !== null && typeof model._widget == 'undefined') {
@@ -201,7 +201,7 @@ var _propEditor = function(withBindingProvider, widgets, templateUrlConverter, m
       if (typeof themeModel !== 'undefined' && themeModel !== null && typeof themeModel._name !== 'undefined') {
         themeSectionName = themeModel._name;
       } else {
-        console.log("TODO missing label for theme section ", prop, model !== null ? model.type : '-');
+        //console.log("TODO missing label for theme section ", prop, model !== null ? model.type : '-');
       }
 
       modelName = '<span class="blockSelectionMethod" data-bind="text: customStyle() ? $root.ut(\'template\', \'' + utils.addSlashes(modelName) + '\') : $root.ut(\'template\', \'' + utils.addSlashes(themeSectionName) + '\')">Block</span>';
@@ -351,7 +351,6 @@ var _propEditor = function(withBindingProvider, widgets, templateUrlConverter, m
 var createBlockEditor = function(defs, widgets, themeUpdater, templateUrlConverter, rootModelName, templateName, editType, templateCreator, baseThreshold, trackGlobalStyles, trackUsage, fromLevel) {
   if (typeof trackUsage == 'undefined') trackUsage = true;
   var model = modelDef.getDef(defs, templateName);
-
   var rootModel = modelDef.getDef(defs, rootModelName);
   var rootPreviewBindings;
   if (typeof rootModel._previewBindings != 'undefined' && templateName != 'thaeme' && editType == 'styler') {
