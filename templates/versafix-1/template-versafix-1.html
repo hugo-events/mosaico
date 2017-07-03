@@ -221,7 +221,7 @@
         /* texts and links */
         textStyle {
             label: Text;
-            properties: face color size
+            properties: face color size align
         }
 
         textStyle:preview { -ko-bind-text: @['AaZz']; -ko-font-family: @face; -ko-color: @color; -ko-font-size: @[size]px; }
@@ -294,7 +294,7 @@
         /* buttons */
         buttonStyle color { label: Text Color; extend: color }
         buttonStyle size { label: Text Size; extend: size }
-        buttonStyle { label: Button; properties: face color size buttonColor radius paddingTop paddingBottom borderWidth borderType borderColor }
+        buttonStyle { label: Button; properties: align face color size buttonColor radius paddingTop paddingBottom borderWidth borderType borderColor }
         buttonStyle:preview { -ko-bind-text: @['Button']; -ko-font-family: @face; -ko-color: @color; -ko-font-size: @[size]px; -ko-background-color: @buttonColor; padding-left: 5px; -ko-border-radius: @[radius]px }
 
         /* padding */
@@ -388,15 +388,15 @@
 
         sideArticleBlock imagePos {label:Image position;widget:select; options: left=Left|right=Right; }
         sideArticleBlock imageWidth { label: Image Size; widget: select; options: 120=Small|166=Medium|258=Big; }
-        sideArticleBlock { label: Image+Text Block; properties: backgroundColor titleVisible=true buttonVisible=true contentVisible=true imageWidth=166 imagePos=left titleTextStyle longTextStyle buttonStyle  image  longText buttonLink; variant:imagePos; theme: contentTheme }
+        sideArticleBlock { label: Image+Text Block; properties: backgroundColor titleVisible=true contentVisible=true buttonVisible=true imageWidth=166 imagePos=left titleTextStyle longTextStyle buttonStyle  image  longText buttonLink; variant:imagePos; theme: contentTheme }
 
         textBlock { label: Text Block; properties: backgroundColor longTextStyle longText; theme: contentTheme}
 
-        singleArticleBlock { label: Image/Text Block; properties: backgroundColor titleVisible=true buttonVisible=true contentVisible=true imageVisible=true titleTextStyle longTextStyle buttonStyle  image  longText buttonLink;theme: contentTheme}
+        singleArticleBlock { label: Image/Text Block; properties: backgroundColor titleVisible=true contentVisible=true buttonVisible=true imageVisible=true titleTextStyle longTextStyle buttonStyle  image  longText buttonLink;theme: contentTheme}
 
-        doubleArticleBlock { label: 2 Columns Block; properties: backgroundColor titleVisible=true buttonVisible=true contentVisible=true imageVisible=true titleTextStyle longTextStyle buttonStyle  leftImage  leftLongText leftButtonLink rightImage  rightLongText rightButtonLink; theme: contentTheme}
+        doubleArticleBlock { label: 2 Columns Block; properties: backgroundColor titleVisible=true contentVisible=true buttonVisible=true imageVisible=true titleTextStyle longTextStyle buttonStyle  leftImage  leftLongText leftButtonLink rightImage  rightLongText rightButtonLink; theme: contentTheme}
 
-        tripleArticleBlock { label: 3 Columns Block; properties: backgroundColor titleVisible=true buttonVisible=true contentVisible=true imageVisible=true titleTextStyle longTextStyle buttonStyle  leftImage  leftLongText leftButtonLink middleImage  middleLongText middleButtonLink rightImage  rightLongText rightButtonLink; theme: contentTheme}
+        tripleArticleBlock { label: 3 Columns Block; properties: backgroundColor titleVisible=true contentVisible=true buttonVisible=true imageVisible=true titleTextStyle longTextStyle buttonStyle  leftImage  leftLongText leftButtonLink middleImage  middleLongText middleButtonLink rightImage  rightLongText rightButtonLink; theme: contentTheme}
 
         logoBlock imageWidth { label: Image Size; widget: select; options: 166=Small|258=Medium|350=Big; variant:imageWidth;}
         logoBlock { label: Logo Block; properties: image imageWidth=258; variant: imageWidth; theme: contentTheme}
@@ -954,7 +954,8 @@
                                                             <table class="vb-content" border="0" cellspacing="9" cellpadding="0" align="left"
                                                                    width="100%" style="width: 100%">
                                                                 <tr data-ko-display="titleVisible">
-                                                                    <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align:left;
+                                                                    <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f;
+                                                                               text-align:left; -ko-text-align: @titleTextStyle.align; -ko-attr-align: @titleTextStyle.align;
                                                                                -ko-font-size: @[titleTextStyle.size]px; -ko-font-family: @titleTextStyle.face; -ko-color: @titleTextStyle.color">
                                                                         <span style="color: #3f3f3f; -ko-color: @titleTextStyle.color" data-ko-editable="titleText">
                                                                         Title
@@ -970,8 +971,10 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr data-ko-display="contentVisible">
-                                                                    <td valign="top">
-                                                                        <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full" style="padding-top: 4px">
+                                                                    <!-- we should aware of replacing contentVisible with buttonVisible for compatibility reasons -->
+                                                                    <td valign="top" data-ko-display="buttonVisible">
+                                                                        <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full"
+                                                                               style="padding-top: 4px; -ko-attr-align: @buttonStyle.align">
                                                                             <tr>
                                                                                 <td width="auto" valign="middle" bgcolor="#bfbfbf" align="center" height="26"
                                                                                     style="font-size: 13px; font-family: Arial, Helvetica, sans-serif; text-align:center; color: #3f3f3f; font-weight: normal;
@@ -982,8 +985,7 @@
                                                                                            border-width: 0px; -ko-border-width: @[buttonStyle.borderWidth]px;
                                                                                            border-style: none; -ko-border-style: @buttonStyle.borderType;
                                                                                            border-color: #ff0000; -ko-border-color: @buttonStyle.borderColor;
-                                                                                           border-radius: 4px; -ko-border-radius: @[buttonStyle.radius]px;
-                                                                                           ">
+                                                                                           border-radius: 4px; -ko-border-radius: @[buttonStyle.radius]px;">
                                                                                     <a data-ko-editable="buttonLink.text" href=""
                                                                                        style="text-decoration: none; color: #3f3f3f; font-weight: normal; -ko-color: @buttonStyle.color; -ko-attr-href: @buttonLink.url">
                                                                                         BUTTON
@@ -1092,7 +1094,8 @@
                                                         <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; width: 100%">
                                                             <tr data-ko-display="titleVisible">
                                                                 <td data-ko-editable="text"
-                                                                    style="width:100%;font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align:left;
+                                                                    style="width:100%;font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f;
+                                                                           text-align:left; -ko-text-align: @titleTextStyle.align; -ko-attr-align: @titleTextStyle.align;
                                                                            -ko-font-size: @[titleTextStyle.size]px; -ko-font-family: @titleTextStyle.face; -ko-color: @titleTextStyle.color">
                                                                     Section Title
                                                                 </td>
@@ -1211,7 +1214,8 @@
                                                                       </td>
                                                                   </tr>
                                                                   <tr data-ko-display="titleVisible">
-                                                                      <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align:left;
+                                                                      <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f;
+                                                                                 text-align:left; -ko-text-align: @titleTextStyle.align; -ko-attr-align: @titleTextStyle.align;
                                                                                  -ko-font-size: @[titleTextStyle.size]px; -ko-font-family: @titleTextStyle.face; -ko-color: @titleTextStyle.color">
                                                                           <span style="color: #3f3f3f; -ko-color: @titleTextStyle.color" data-ko-editable="leftTitleText">Title</span>
                                                                       </td>
@@ -1267,8 +1271,9 @@
                                                                       </td>
                                                                   </tr>
                                                                   <tr data-ko-display="titleVisible">
-                                                                      <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align:left;
-                                                                          -ko-font-size: @[titleTextStyle.size]px; -ko-font-family: @titleTextStyle.face; -ko-color: @titleTextStyle.color">
+                                                                      <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f;
+                                                                                 text-align:left; -ko-text-align: @titleTextStyle.align; -ko-attr-align: @titleTextStyle.align;
+                                                                                 -ko-font-size: @[titleTextStyle.size]px; -ko-font-family: @titleTextStyle.face; -ko-color: @titleTextStyle.color">
                                                                           <span style="color: #3f3f3f; -ko-color: @titleTextStyle.color" data-ko-editable="rightTitleText">
                                                                               Title
                                                                           </span>
@@ -1384,7 +1389,8 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr data-ko-display="titleVisible">
-                                                                    <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align:left;
+                                                                    <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f;
+                                                                               text-align:left; -ko-text-align: @titleTextStyle.align; -ko-attr-align: @titleTextStyle.align;
                                                                                -ko-font-size: @[titleTextStyle.size]px; -ko-font-family: @titleTextStyle.face; -ko-color: @titleTextStyle.color">
                                                                         <span style="color: #3f3f3f; -ko-color: @titleTextStyle.color" data-ko-editable="leftTitleText">Title</span>
                                                                     </td>
@@ -1438,7 +1444,8 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr data-ko-display="titleVisible">
-                                                                    <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align:left;
+                                                                    <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f;
+                                                                               text-align:left; -ko-text-align: @titleTextStyle.align; -ko-attr-align: @titleTextStyle.align;
                                                                                -ko-font-size: @[titleTextStyle.size]px; -ko-font-family: @titleTextStyle.face; -ko-color: @titleTextStyle.color">
                                                                         <span data-ko-editable="middleTitleText" style="color: #3f3f3f; -ko-color: @titleTextStyle.color">Title</span>
                                                                     </td>
@@ -1494,8 +1501,9 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr data-ko-display="titleVisible">
-                                                                    <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align:left;
-                                                                        -ko-font-size: @[titleTextStyle.size]px; -ko-font-family: @titleTextStyle.face; -ko-color: @titleTextStyle.color">
+                                                                    <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f;
+                                                                               text-align:left; -ko-text-align: @titleTextStyle.align; -ko-attr-align: @titleTextStyle.align;
+                                                                               -ko-font-size: @[titleTextStyle.size]px; -ko-font-family: @titleTextStyle.face; -ko-color: @titleTextStyle.color">
                                                                         <span style="color: #3f3f3f; -ko-color: @titleTextStyle.color" data-ko-editable="rightTitleText">
                                                                            Title
                                                                         </span>
