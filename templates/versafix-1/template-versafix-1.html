@@ -292,11 +292,10 @@
         }
 
         /* buttons */
-        buttonStyle { label: Button; properties: align face color size buttonColor radius paddingTop paddingBottom borderWidth borderType borderColor }
         buttonStyle color { label: Text Color; extend: color }
         buttonStyle size { label: Text Size; extend: size }
+        buttonStyle { label: Button; properties: align face color size buttonColor radius paddingTop paddingBottom borderWidth borderType borderColor }
         buttonStyle:preview { -ko-bind-text: @['Button']; -ko-font-family: @face; -ko-color: @color; -ko-font-size: @[size]px; -ko-background-color: @buttonColor; padding-left: 5px; -ko-border-radius: @[radius]px }
-        /*leftButtonStyle { extend: buttonStyle }*/
 
         /* padding */
         paddingStyle { label: Padding; properties: paddingTop paddingRight paddingBottom paddingLeft}
@@ -329,10 +328,6 @@
             properties: preheaderVisible=true;
             version: 1.0.6;
         }
-
-        /*leftTitleAlign { label: Left Title Alignment; extend: align }
-        middleTitleAlign { label: Middle Title Alignment; extend: align }
-        rightTitleAlign { label: Right Title Alignment; extend: align }*/
 
         leftButtonAlign { label: Left Button Alignment; extend: align }
         middleButtonAlign { label: Middle Button Alignment; extend: align }
@@ -508,7 +503,7 @@
             padding-bottom: 0px;
             border-radius: 0px;
         }
-        .section-title p {
+        .section-title > p {
           margin: 0;
         }
         .oldwebkit {
