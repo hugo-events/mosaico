@@ -330,9 +330,9 @@
             version: 1.0.6;
         }
 
-        leftTitleAlign { label: Left Title Alignment; extend: align }
+        /*leftTitleAlign { label: Left Title Alignment; extend: align }
         middleTitleAlign { label: Middle Title Alignment; extend: align }
-        rightTitleAlign { label: Right Title Alignment; extend: align }
+        rightTitleAlign { label: Right Title Alignment; extend: align }*/
 
         leftButtonAlign { label: Left Button Alignment; extend: align }
         middleButtonAlign { label: Middle Button Alignment; extend: align }
@@ -415,13 +415,13 @@
 
         textBlock { label: Text Block; properties: backgroundColor longTextStyle longText; theme: contentTheme}
 
-        singleArticleBlock { label: Image/Text Block; properties: backgroundColor titleVisible=true contentVisible=true buttonVisible=true imageVisible=true titleTextStyle longTextStyle buttonStyle image longText buttonLink; theme: contentTheme}
+        singleArticleBlock { label: Image/Text Block; properties: backgroundColor titleVisible=true imageVisible=true contentVisible=true buttonVisible=true titleTextStyle longTextStyle buttonStyle image longText buttonLink; theme: contentTheme}
         /* TODO: centering button for the block:
         singleArticleBlock buttonStyle { properties: align=Center}*/
 
-        doubleArticleBlock { label: 2 Columns Block; properties: backgroundColor leftTitleVisible=true rightTitleVisible=true imageVisible=true contentVisible=true leftButtonVisible=true rightButtonVisible=true titleTextStyle longTextStyle buttonStyle leftImage rightImage leftLongText leftButtonLink rightLongText rightButtonLink leftButtonAlign rightButtonAlign; theme: contentTheme}
+        doubleArticleBlock { label: 2 Columns Block; properties: backgroundColor leftTitleVisible=true rightTitleVisible=true imageVisible=true contentVisible=true leftButtonVisible=true leftButtonAlign rightButtonVisible=true rightButtonAlign titleTextStyle longTextStyle buttonStyle leftImage rightImage leftLongText leftButtonLink rightLongText rightButtonLink; theme: contentTheme}
 
-        tripleArticleBlock { label: 3 Columns Block; properties: backgroundColor titleVisible=true contentVisible=true buttonVisible=true imageVisible=true titleTextStyle longTextStyle buttonStyle leftImage leftLongText leftButtonLink middleImage middleLongText middleButtonLink rightImage rightLongText rightButtonLink; theme: contentTheme}
+        tripleArticleBlock { label: 3 Columns Block; properties: backgroundColor leftTitleVisible=true middleTitleVisible=true rightTitleVisible=true imageVisible=true contentVisible=true leftButtonVisible=true leftButtonAlign middleButtonVisible=true middleButtonAlign rightButtonVisible=true rightButtonAlign titleTextStyle longTextStyle buttonStyle leftImage leftLongText leftButtonLink middleImage middleLongText middleButtonLink rightImage rightLongText rightButtonLink; theme: contentTheme}
 
         logoBlock imageWidth { label: Image Size; widget: select; options: 166=Small|258=Medium|350=Big; variant:imageWidth;}
         logoBlock { label: Logo Block; properties: image imageWidth=258; variant: imageWidth; theme: contentTheme}
@@ -507,6 +507,9 @@
             vertical-align: top;
             padding-bottom: 0px;
             border-radius: 0px;
+        }
+        .section-title p {
+          margin: 0;
         }
         .oldwebkit {
             max-width: 600px;
@@ -979,12 +982,10 @@
                                                             <table class="vb-content" border="0" cellspacing="9" cellpadding="0" align="left"
                                                                    width="100%" style="width: 100%">
                                                                 <tr data-ko-display="titleVisible">
-                                                                    <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f;
-                                                                               text-align:left; -ko-text-align: @titleTextStyle.align; -ko-attr-align: @titleTextStyle.align;
+                                                                    <td data-ko-editable="titleText"
+                                                                        style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align:left;
                                                                                -ko-font-size: @[titleTextStyle.size]px; -ko-font-family: @titleTextStyle.face; -ko-color: @titleTextStyle.color">
-                                                                        <span style="color: #3f3f3f; -ko-color: @titleTextStyle.color" data-ko-editable="titleText">
                                                                         Title
-                                                                        </span>
                                                                     </td>
                                                                 </tr>
                                                                 <tr data-ko-display="contentVisible">
@@ -996,7 +997,6 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr data-ko-display="contentVisible">
-                                                                    <!-- we should aware of replacing contentVisible with buttonVisible for compatibility reasons -->
                                                                     <td valign="top" data-ko-display="buttonVisible">
                                                                         <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full"
                                                                                style="padding-top: 4px; -ko-attr-align: @buttonStyle.align">
@@ -1242,10 +1242,11 @@
                                                                       </td>
                                                                   </tr>
                                                                   <tr data-ko-display="leftTitleVisible">
-                                                                      <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f;
-                                                                                 text-align:left; -ko-text-align: @leftTitleAlign; -ko-attr-align: @leftTitleAlign;
+                                                                      <td data-ko-editable="leftTitleText"
+                                                                          class="section-title"
+                                                                          style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align:left;
                                                                                  -ko-font-size: @[titleTextStyle.size]px; -ko-font-family: @titleTextStyle.face; -ko-color: @titleTextStyle.color">
-                                                                          <span style="color: #3f3f3f; -ko-color: @titleTextStyle.color" data-ko-editable="leftTitleText">Title</span>
+                                                                          Title
                                                                       </td>
                                                                   </tr>
                                                                   <tr data-ko-display="contentVisible">
@@ -1256,7 +1257,7 @@
                                                                       </td>
                                                                   </tr>
                                                                   <tr data-ko-display="leftButtonVisible">
-                                                                      <td valign="top" data-ko-display="leftButtonVisible">
+                                                                      <td valign="top">
                                                                           <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full"
                                                                                  style="padding-top: 4px; -ko-attr-align: @leftButtonAlign">
                                                                               <tr>
@@ -1300,12 +1301,11 @@
                                                                       </td>
                                                                   </tr>
                                                                   <tr data-ko-display="rightTitleVisible">
-                                                                      <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f;
-                                                                                 text-align:left; -ko-text-align: @rightTitleAlign; -ko-attr-align: @rightTitleAlign;
+                                                                      <td data-ko-editable="rightTitleText"
+                                                                          class="section-title"
+                                                                          style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align:left;
                                                                                  -ko-font-size: @[titleTextStyle.size]px; -ko-font-family: @titleTextStyle.face; -ko-color: @titleTextStyle.color">
-                                                                          <span style="color: #3f3f3f; -ko-color: @titleTextStyle.color" data-ko-editable="rightTitleText">
-                                                                              Title
-                                                                          </span>
+                                                                          Title
                                                                       </td>
                                                                   </tr>
                                                                   <tr data-ko-display="contentVisible">
@@ -1418,11 +1418,11 @@
                                                                         </a>
                                                                     </td>
                                                                 </tr>
-                                                                <tr data-ko-display="titleVisible">
-                                                                    <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f;
-                                                                               text-align:left; -ko-text-align: @titleTextStyle.align; -ko-attr-align: @titleTextStyle.align;
+                                                                <tr data-ko-display="leftTitleVisible">
+                                                                    <td data-ko-editable="leftTitleText"
+                                                                        style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align:left;
                                                                                -ko-font-size: @[titleTextStyle.size]px; -ko-font-family: @titleTextStyle.face; -ko-color: @titleTextStyle.color">
-                                                                        <span style="color: #3f3f3f; -ko-color: @titleTextStyle.color" data-ko-editable="leftTitleText">Title</span>
+                                                                        Title
                                                                     </td>
                                                                 </tr>
                                                                 <tr data-ko-display="contentVisible">
@@ -1432,9 +1432,10 @@
                                                                         <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
                                                                     </td>
                                                                 </tr>
-                                                                <tr data-ko-display="buttonVisible">
+                                                                <tr data-ko-display="leftButtonVisible">
                                                                     <td valign="top">
-                                                                        <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full" style="padding-top: 4px">
+                                                                        <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full"
+                                                                               style="padding-top: 4px; -ko-attr-align: @leftButtonAlign">
                                                                             <tr>
                                                                                 <td width="auto" valign="middle" bgcolor="#bfbfbf" align="center" height="26"
                                                                                     style="font-size: 13px; font-family: Arial, Helvetica, sans-serif; text-align:center; color: #3f3f3f; font-weight: normal;
@@ -1473,11 +1474,12 @@
                                                                         </a>
                                                                     </td>
                                                                 </tr>
-                                                                <tr data-ko-display="titleVisible">
-                                                                    <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f;
+                                                                <tr data-ko-display="middleTitleVisible">
+                                                                    <td data-ko-editable="middleTitleText"
+                                                                        style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f;
                                                                                text-align:left; -ko-text-align: @titleTextStyle.align; -ko-attr-align: @titleTextStyle.align;
                                                                                -ko-font-size: @[titleTextStyle.size]px; -ko-font-family: @titleTextStyle.face; -ko-color: @titleTextStyle.color">
-                                                                        <span data-ko-editable="middleTitleText" style="color: #3f3f3f; -ko-color: @titleTextStyle.color">Title</span>
+                                                                        Title
                                                                     </td>
                                                                 </tr>
                                                                 <tr data-ko-display="contentVisible">
@@ -1488,9 +1490,10 @@
                                                                         <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
                                                                     </td>
                                                                 </tr>
-                                                                <tr data-ko-display="buttonVisible">
+                                                                <tr data-ko-display="middleButtonVisible">
                                                                     <td valign="top">
-                                                                        <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full" style="padding-top: 4px">
+                                                                        <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full"
+                                                                               style="padding-top: 4px; -ko-attr-align: @middleButtonAlign">
                                                                             <tr>
                                                                                 <td width="auto" valign="middle" bgcolor="#bfbfbf" align="center" height="26"
                                                                                     style="font-size: 13px; font-family: Arial, Helvetica, sans-serif; text-align:center; color: #3f3f3f; font-weight: normal;
@@ -1530,13 +1533,11 @@
                                                                         </a>
                                                                     </td>
                                                                 </tr>
-                                                                <tr data-ko-display="titleVisible">
-                                                                    <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f;
-                                                                               text-align:left; -ko-text-align: @titleTextStyle.align; -ko-attr-align: @titleTextStyle.align;
+                                                                <tr data-ko-display="rightTitleVisible">
+                                                                    <td data-ko-editable="rightTitleText"
+                                                                        style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align:left;
                                                                                -ko-font-size: @[titleTextStyle.size]px; -ko-font-family: @titleTextStyle.face; -ko-color: @titleTextStyle.color">
-                                                                        <span style="color: #3f3f3f; -ko-color: @titleTextStyle.color" data-ko-editable="rightTitleText">
-                                                                           Title
-                                                                        </span>
+                                                                       Title
                                                                     </td>
                                                                 </tr>
                                                                 <tr data-ko-display="contentVisible">
@@ -1546,9 +1547,10 @@
                                                                         <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
                                                                     </td>
                                                                 </tr>
-                                                                <tr data-ko-display="buttonVisible">
+                                                                <tr data-ko-display="rightButtonVisible">
                                                                     <td valign="top">
-                                                                        <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full" style="padding-top: 4px">
+                                                                        <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full"
+                                                                               style="padding-top: 4px; -ko-attr-align: @rightButtonAlign">
                                                                             <tr>
                                                                                 <td width="auto" valign="middle" bgcolor="#bfbfbf" align="center" height="26"
                                                                                     style="font-size: 13px; font-family: Arial, Helvetica, sans-serif; text-align:center; color: #3f3f3f; font-weight: normal;
