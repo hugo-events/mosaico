@@ -292,10 +292,11 @@
         }
 
         /* buttons */
+        buttonStyle { label: Button; properties: align face color size buttonColor radius paddingTop paddingBottom borderWidth borderType borderColor }
         buttonStyle color { label: Text Color; extend: color }
         buttonStyle size { label: Text Size; extend: size }
-        buttonStyle { label: Button; properties: align face color size buttonColor radius paddingTop paddingBottom borderWidth borderType borderColor }
         buttonStyle:preview { -ko-bind-text: @['Button']; -ko-font-family: @face; -ko-color: @color; -ko-font-size: @[size]px; -ko-background-color: @buttonColor; padding-left: 5px; -ko-border-radius: @[radius]px }
+        /*leftButtonStyle { extend: buttonStyle }*/
 
         /* padding */
         paddingStyle { label: Padding; properties: paddingTop paddingRight paddingBottom paddingLeft}
@@ -329,20 +330,42 @@
             version: 1.0.6;
         }
 
+        leftTitleAlign { label: Left Title Alignment; extend: align }
+        middleTitleAlign { label: Middle Title Alignment; extend: align }
+        rightTitleAlign { label: Right Title Alignment; extend: align }
+
+        leftButtonAlign { label: Left Button Alignment; extend: align }
+        middleButtonAlign { label: Middle Button Alignment; extend: align }
+        rightButtonAlign { label: Right Button Alignment; extend: align }
+
+        leftButtonVisible { label: Show Left Button; extend: visible; }
+        middleButtonVisible { label: Show Middle Button; extend: visible; }
+        rightButtonVisible { label: Show Right Button; extend: visible; }
+
+        leftTitleVisible { label: Show Left Title; extend: visible; }
+        middleTitleVisible { label: Show Middle Title; extend: visible; }
+        rightTitleVisible { label: Show Right Title; extend: visible; }
+
         leftImage { label: Left Image; extend: image }
         leftLongText { label: Left Text; extend: text }
         leftButtonLink { label: Left Button; extend: buttonLink }
+
         middleImage { label: Central Image; extend: image }
         middleLongText { label: Central Text; extend: text }
         middleButtonLink { label: Central Button; extend: buttonLink }
+
         rightImage { label: Right Image; extend: image }
         rightLongText { label: Right Text; extend: text }
         rightButtonLink { label: Right Button; extend: buttonLink }
+
         webversionText{ label: Web Link Text; extend: text;}
         unsubscribeText{ label: Unsubscribe Link; extend: text;}
 
         titleVisible { label: Show Title; extend: visible; }
         buttonVisible { label: Show Button; extend: visible; }
+        leftButtonVisible { label: Show Left Button; extend: visible; }
+        middleButtonVisible { label: Show Middle Button; extend: visible; }
+        rightButtonVisible { label: Show Right Button; extend: visible; }
         imageVisible { label: Show Image; extend: visible; }
         contentVisible { label: Show Content; extend: visible; }
 
@@ -388,15 +411,17 @@
 
         sideArticleBlock imagePos {label:Image position;widget:select; options: left=Left|right=Right; }
         sideArticleBlock imageWidth { label: Image Size; widget: select; options: 120=Small|166=Medium|258=Big; }
-        sideArticleBlock { label: Image+Text Block; properties: backgroundColor titleVisible=true contentVisible=true buttonVisible=true imageWidth=166 imagePos=left titleTextStyle longTextStyle buttonStyle  image  longText buttonLink; variant:imagePos; theme: contentTheme }
+        sideArticleBlock { label: Image+Text Block; properties: backgroundColor titleVisible=true contentVisible=true buttonVisible=true imageWidth=166 imagePos=left titleTextStyle longTextStyle buttonStyle image longText buttonLink; variant:imagePos; theme: contentTheme }
 
         textBlock { label: Text Block; properties: backgroundColor longTextStyle longText; theme: contentTheme}
 
-        singleArticleBlock { label: Image/Text Block; properties: backgroundColor titleVisible=true contentVisible=true buttonVisible=true imageVisible=true titleTextStyle longTextStyle buttonStyle  image  longText buttonLink;theme: contentTheme}
+        singleArticleBlock { label: Image/Text Block; properties: backgroundColor titleVisible=true contentVisible=true buttonVisible=true imageVisible=true titleTextStyle longTextStyle buttonStyle image longText buttonLink; theme: contentTheme}
+        /* TODO: centering button for the block:
+        singleArticleBlock buttonStyle { properties: align=Center}*/
 
-        doubleArticleBlock { label: 2 Columns Block; properties: backgroundColor titleVisible=true contentVisible=true buttonVisible=true imageVisible=true titleTextStyle longTextStyle buttonStyle  leftImage  leftLongText leftButtonLink rightImage  rightLongText rightButtonLink; theme: contentTheme}
+        doubleArticleBlock { label: 2 Columns Block; properties: backgroundColor leftTitleVisible=true rightTitleVisible=true imageVisible=true contentVisible=true leftButtonVisible=true rightButtonVisible=true titleTextStyle longTextStyle buttonStyle leftImage rightImage leftLongText leftButtonLink rightLongText rightButtonLink leftButtonAlign rightButtonAlign; theme: contentTheme}
 
-        tripleArticleBlock { label: 3 Columns Block; properties: backgroundColor titleVisible=true contentVisible=true buttonVisible=true imageVisible=true titleTextStyle longTextStyle buttonStyle  leftImage  leftLongText leftButtonLink middleImage  middleLongText middleButtonLink rightImage  rightLongText rightButtonLink; theme: contentTheme}
+        tripleArticleBlock { label: 3 Columns Block; properties: backgroundColor titleVisible=true contentVisible=true buttonVisible=true imageVisible=true titleTextStyle longTextStyle buttonStyle leftImage leftLongText leftButtonLink middleImage middleLongText middleButtonLink rightImage rightLongText rightButtonLink; theme: contentTheme}
 
         logoBlock imageWidth { label: Image Size; widget: select; options: 166=Small|258=Medium|350=Big; variant:imageWidth;}
         logoBlock { label: Logo Block; properties: image imageWidth=258; variant: imageWidth; theme: contentTheme}
@@ -1115,7 +1140,8 @@
                                                             </tr>
                                                             <tr data-ko-display="buttonVisible">
                                                                 <td valign="top">
-                                                                    <table cellpadding="0" border="0" align="center" cellspacing="0" class="mobile-full">
+                                                                    <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full"
+                                                                           style="-ko-attr-align: @buttonStyle.align">
                                                                         <tr>
                                                                             <td width="auto" valign="middle" bgcolor="#bfbfbf" align="center" height="26"
                                                                                 style="font-size: 13px; font-family: Arial, Helvetica, sans-serif; text-align:center; color: #3f3f3f; font-weight: normal;
@@ -1128,8 +1154,9 @@
                                                                                        border-color: #ff0000; -ko-border-color: @buttonStyle.borderColor;
                                                                                        border-radius: 4px; -ko-border-radius: @[buttonStyle.radius]px;
                                                                                        ">
-                                                                                <a data-ko-editable="buttonLink.text" href="" style="text-decoration: none; color: #3f3f3f; font-weight: normal;
-                                                                                -ko-color: @buttonStyle.color; -ko-attr-href: @buttonLink.url">BUTTON</a>
+                                                                                <a data-ko-editable="buttonLink.text" href=""
+                                                                                   style="text-decoration: none; color: #3f3f3f; font-weight: normal;
+                                                                                          -ko-color: @buttonStyle.color; -ko-attr-href: @buttonLink.url">BUTTON</a>
                                                                             </td>
                                                                         </tr>
                                                                     </table>
@@ -1206,16 +1233,17 @@
                                                                   <tr data-ko-display="imageVisible">
                                                                       <td width="100%" align="left" class="links-color" style="padding-bottom: 9px">
                                                                           <a data-ko-link="leftImage.url">
-                                                                              <img data-ko-editable="leftImage.src" border="0" hspace="0" vspace="0" width="258" data-ko-placeholder-height="100"
-                                                                                  src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=258%2C100" class="mobile-full"
-                                                                                  alt="" style="vertical-align:top; width: 100%; height: auto;
-                                                                                  -ko-attr-alt: @leftImage.alt" />
+                                                                              <img data-ko-editable="leftImage.src"  alt="" border="0" hspace="0" vspace="0" width="258"
+                                                                                   data-ko-placeholder-height="100"
+                                                                                   src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=258%2C100"
+                                                                                   class="mobile-full"
+                                                                                   style="vertical-align:top; width: 100%; height: auto; -ko-attr-alt: @leftImage.alt" />
                                                                           </a>
                                                                       </td>
                                                                   </tr>
-                                                                  <tr data-ko-display="titleVisible">
+                                                                  <tr data-ko-display="leftTitleVisible">
                                                                       <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f;
-                                                                                 text-align:left; -ko-text-align: @titleTextStyle.align; -ko-attr-align: @titleTextStyle.align;
+                                                                                 text-align:left; -ko-text-align: @leftTitleAlign; -ko-attr-align: @leftTitleAlign;
                                                                                  -ko-font-size: @[titleTextStyle.size]px; -ko-font-family: @titleTextStyle.face; -ko-color: @titleTextStyle.color">
                                                                           <span style="color: #3f3f3f; -ko-color: @titleTextStyle.color" data-ko-editable="leftTitleText">Title</span>
                                                                       </td>
@@ -1227,9 +1255,10 @@
                                                                           <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
                                                                       </td>
                                                                   </tr>
-                                                                  <tr data-ko-display="buttonVisible">
-                                                                      <td valign="top">
-                                                                          <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full" style="padding-top: 4px">
+                                                                  <tr data-ko-display="leftButtonVisible">
+                                                                      <td valign="top" data-ko-display="leftButtonVisible">
+                                                                          <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full"
+                                                                                 style="padding-top: 4px; -ko-attr-align: @leftButtonAlign">
                                                                               <tr>
                                                                                   <td width="auto" valign="middle" bgcolor="#bfbfbf" align="center" height="26"
                                                                                       style="font-size: 13px; font-family: Arial, Helvetica, sans-serif; text-align:center; color: #3f3f3f; font-weight: normal;
@@ -1270,9 +1299,9 @@
                                                                           </a>
                                                                       </td>
                                                                   </tr>
-                                                                  <tr data-ko-display="titleVisible">
+                                                                  <tr data-ko-display="rightTitleVisible">
                                                                       <td style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f;
-                                                                                 text-align:left; -ko-text-align: @titleTextStyle.align; -ko-attr-align: @titleTextStyle.align;
+                                                                                 text-align:left; -ko-text-align: @rightTitleAlign; -ko-attr-align: @rightTitleAlign;
                                                                                  -ko-font-size: @[titleTextStyle.size]px; -ko-font-family: @titleTextStyle.face; -ko-color: @titleTextStyle.color">
                                                                           <span style="color: #3f3f3f; -ko-color: @titleTextStyle.color" data-ko-editable="rightTitleText">
                                                                               Title
@@ -1286,9 +1315,10 @@
                                                                           <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                                                                       </td>
                                                                   </tr>
-                                                                  <tr data-ko-display="buttonVisible">
+                                                                  <tr data-ko-display="rightButtonVisible">
                                                                       <td valign="top">
-                                                                          <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full" style="padding-top: 4px">
+                                                                          <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full"
+                                                                                 style="padding-top: 4px; -ko-attr-align: @rightButtonAlign">
                                                                               <tr>
                                                                                   <td width="auto" valign="middle" bgcolor="#bfbfbf" align="center" height="26"
                                                                                       style="font-size: 13px; font-family: Arial, Helvetica, sans-serif; text-align:center; color: #3f3f3f; font-weight: normal;
