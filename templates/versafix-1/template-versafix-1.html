@@ -508,6 +508,13 @@
         body { margin: 0; padding: 0 }
         img { border: 0; display: block; }
 
+        /* emoji must be as inline images */
+        td > a > img,
+        td > p > img {
+            display: inline !important;
+            vertical-align: middle;
+        }
+
         .socialLinks { font-size: 6px; }
         .socialLinks a {
             display: inline-block;
@@ -622,6 +629,12 @@
             float: left;
         }
 
+        /* fix emoji displaying for wysiwyg editor */
+        [contenteditable] a > img,
+        [contenteditable] p > img {
+            display: inline !important;
+            vertical-align: middle;
+        }
 
         /* Mobile styles: show as mobile layout if viewport less than 600px (email wrapper width) */
         @media screen and (max-width: 600px) {
