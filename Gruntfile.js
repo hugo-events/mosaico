@@ -190,14 +190,7 @@ module.exports = function(grunt) {
           'skins': 'tinymce/skins',
           'plugins': 'tinymce/plugins',
           'notoregular': 'webfont-notosans/regular',
-        }
-      },
-      smileys: {
-        options: {
-          destPrefix: '../src/editor/vendor/plugins',
-        },
-        files: {
-          'smileys': 'Smileys/smileys',
+          'plugins/smileys': 'Smileys/smileys'
         }
       },
       fontawesome: {
