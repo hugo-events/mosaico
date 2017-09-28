@@ -192,6 +192,14 @@ module.exports = function(grunt) {
           'notoregular': 'webfont-notosans/regular',
         }
       },
+      smileys: {
+        options: {
+          destPrefix: '../src/editor/vendor/plugins',
+        },
+        files: {
+          'smileys': 'Smileys/smileys',
+        }
+      },
       fontawesome: {
         options: {
           destPrefix: 'dist/fa'
