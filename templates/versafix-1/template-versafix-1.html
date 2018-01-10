@@ -442,7 +442,7 @@
         textBlock { label: Text Block; properties: backgroundColor longTextStyle longText; theme: contentTheme}
 
         singleArticleBlock imagePos {label:Image position;widget:select; options: top=Top|bottom=Bottom; }
-        singleArticleBlock { label: Image/Text Block; properties: backgroundColor imageVisible=true titleVisible=true contentVisible=true buttonVisible=true titleTextStyle longTextStyle buttonStyle image longText buttonLink; variant:imagePos, theme: contentTheme }
+        singleArticleBlock { label: Image/Text Block; properties: backgroundColor imageVisible=true titleVisible=true contentVisible=true buttonVisible=true titleTextStyle longTextStyle buttonStyle image imagePos=top longText buttonLink; variant:imagePos; theme: contentTheme }
 
         /* TODO: singleArticleBlock buttonStyle { properties: align=center }*/
 
@@ -1212,8 +1212,7 @@
 
                                             <table class="vb-content" cellpadding="0" cellspacing="14" border="0" width="100%" style="width:100%">
 
-                                                <div data-ko-display="imagePos eq 'top'" data-ko-wrap="false">
-                                                <tr data-ko-display="imageVisible">
+                                                <tr data-ko-display="imageVisible && imagePos eq 'top'">
                                                     <td valign="top" align="center" class="links-color">
 
                                                         <!-- Image section -->
@@ -1227,7 +1226,6 @@
 
                                                     </td>
                                                 </tr>
-                                                </div>
                                                 <tr>
                                                     <td>
 
@@ -1282,8 +1280,7 @@
 
                                                     </td>
                                                 </tr>
-                                                <div data-ko-display="imagePos eq 'bottom'" data-ko-wrap="false">
-                                                <tr data-ko-display="imageVisible">
+                                                <tr data-ko-display="imageVisible && imagePos eq 'bottom'">
                                                     <td valign="top" align="center" class="links-color">
 
                                                         <!-- Image section -->
@@ -1297,7 +1294,6 @@
 
                                                     </td>
                                                 </tr>
-                                                </div>
                                             </table>
 
                                         </td></tr></tbody></table>
