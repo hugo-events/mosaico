@@ -441,7 +441,9 @@
 
         textBlock { label: Text Block; properties: backgroundColor longTextStyle longText; theme: contentTheme}
 
-        singleArticleBlock { label: Image/Text Block; properties: backgroundColor imageVisible=true titleVisible=true contentVisible=true buttonVisible=true titleTextStyle longTextStyle buttonStyle image longText buttonLink;theme: contentTheme }
+        singleArticleBlock imagePos {label:Image position;widget:select; options: top=Top|bottom=Bottom; }
+        singleArticleBlock { label: Image/Text Block; properties: backgroundColor imageVisible=true titleVisible=true contentVisible=true buttonVisible=true titleTextStyle longTextStyle buttonStyle image longText buttonLink; variant:imagePos, theme: contentTheme }
+
         /* TODO: singleArticleBlock buttonStyle { properties: align=center }*/
 
         doubleArticleBlock { label: 2 Columns Block; properties: backgroundColor imageVisible=true leftTitleVisible=true rightTitleVisible=true contentVisible=true titleTextStyle longTextStyle leftButtonVisible=true rightButtonVisible=true leftButtonStyle rightButtonStyle leftImage leftLongText leftButtonLink rightImage rightLongText rightButtonLink; theme: contentTheme }
@@ -823,12 +825,23 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Playfair+Display:400,700|Roboto:400,700" rel="stylesheet">
     <!--<![endif]-->
 
-    <!--[if gte mso 9]><xml>
+    <!--[if gte mso 9]>
+    <style>
+    .global-background-wrapper{
+      background-color: transparent !important;
+    }
+    </style>
+    <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
+        <v:fill type="tile"
+            style="-ko-attr-src: @[_theme_.frameTheme.globalBackgroundStyle.src];" />
+    </v:background>
+    <xml>
         <o:OfficeDocumentSettings>
         <o:AllowPNG/>
         <o:PixelsPerInch>96</o:PixelsPerInch>
         </o:OfficeDocumentSettings>
-    </xml><![endif]-->
+    </xml>
+    <![endif]-->
 
 </head>
 
@@ -850,17 +863,6 @@
     -ko-background-image: @[_theme_.frameTheme.globalBackgroundStyle.src eq 'none' ? 'none' : 'url(' + _theme_.frameTheme.globalBackgroundStyle.src + ')'];
     -ko-attr-background: @[_theme_.frameTheme.globalBackgroundStyle.src];">
     <tbody><tr><td>
-  <!--[if gte mso 9]>
-  <style>
-    .global-background-wrapper{
-      background-color: transparent !important;
-    }
-  </style>
-  <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
-    <v:fill type="tile"
-        style="-ko-attr-src: @[_theme_.frameTheme.globalBackgroundStyle.src];" />
-  </v:background>
-  <![endif]-->
 <center>
 <!-- global border, wrapper table -->
 <table cellpadding="0" border="0" cellspacing="0"
@@ -1210,6 +1212,7 @@
 
                                             <table class="vb-content" cellpadding="0" cellspacing="14" border="0" width="100%" style="width:100%">
 
+                                                <div data-ko-display="imagePos eq 'top'" data-ko-wrap="false">
                                                 <tr data-ko-display="imageVisible">
                                                     <td valign="top" align="center" class="links-color">
 
@@ -1224,6 +1227,7 @@
 
                                                     </td>
                                                 </tr>
+                                                </div>
                                                 <tr>
                                                     <td>
 
@@ -1278,6 +1282,22 @@
 
                                                     </td>
                                                 </tr>
+                                                <div data-ko-display="imagePos eq 'bottom'" data-ko-wrap="false">
+                                                <tr data-ko-display="imageVisible">
+                                                    <td valign="top" align="center" class="links-color">
+
+                                                        <!-- Image section -->
+                                                        <a data-ko-link="image.url" href="">
+                                                            <img data-ko-editable="image.src" data-ko-placeholder-height="200"
+                                                                 border="0" hspace="0" vspace="0" width="542"
+                                                                 src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=542%2C200"
+                                                                 class="mobile-full" alt=""
+                                                                 style="width: 542px; vertical-align:top; height: auto; -ko-attr-alt: @image.alt" />
+                                                        </a>
+
+                                                    </td>
+                                                </tr>
+                                                </div>
                                             </table>
 
                                         </td></tr></tbody></table>
