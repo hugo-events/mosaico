@@ -125,6 +125,8 @@ var _propInput = function(model, prop, propAccessor, editType, widgets) {
     var step = (max - min) >= 100 ? 10 : 1;
     var page = step * 5;
     html += '<input class="number-spinner" size="7" step="' + step + '" type="number" value="-1" data-bind="spinner: { min: ' + min + ', max: ' + max + ', page: ' + page + ', value: ' + propAccessor + ' }, valueUpdate: [\'change\', \'spin\']' + ', ' + onfocusbinding + '" />';
+  } else if (widget == 'textarea') {
+    html += '<textarea value="nothing" data-bind="value: ' + propAccessor + ', ' + onfocusbinding + '"></textarea>';
   } else {
     html += '<input size="7" type="text" value="nothing" data-bind="value: ' + propAccessor + ', ' + onfocusbinding + '" />';
   }

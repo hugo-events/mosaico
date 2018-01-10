@@ -73,6 +73,10 @@
             label: Paragraph;
             widget: text
         }
+        source {
+            label: Source;
+            widget: textarea
+        }
         url {
             label: Link;
             widget: url
@@ -316,7 +320,7 @@
         globalStyle {
             label: Custom CSS;
             help: Custom stylesheet;
-            properties: url;
+            properties: source;
         }
 
         /* buttons */
@@ -803,7 +807,7 @@
             text-decoration: underline;
         }
     </style>
-    <link rel="stylesheet" style="-ko-attr-href: @[_theme_.frameTheme.globalStyle.url]">
+    <style type="text/css" style="-ko-bind-text: @_theme_.frameTheme.globalStyle.source"></style>
 
     <!--[if !mso]><!-- -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Playfair+Display:400,700|Roboto:400,700" rel="stylesheet">
@@ -829,7 +833,7 @@
     background-color: #bfbfbf; -ko-background-color: @[_theme_.frameTheme.globalBackgroundStyle.color eq 'none' ? _theme_.contentTheme.externalBackgroundColor : _theme_.frameTheme.globalBackgroundStyle.color];
     backgnd-image: none; -ko-backgnd-image: @globalBackgroundStyle.src;
     backgnd-color: none; -ko-backgnd-color: @globalBackgroundStyle.color;
-    -ko-attr-data-href: @globalStyle.url;
+    -ko-attr-data-source: @globalStyle.source;
     background-repeat: repeat;
     background-position: top center;
     background-image: none;
