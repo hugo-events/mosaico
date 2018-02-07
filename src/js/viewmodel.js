@@ -489,6 +489,9 @@ viewModel.exportHTML = function() {
     content = content.replace(/ replaced(http-equiv="[^"]*")([^>]*) http-equiv="[^"]*"/gm, ' $1$2');
     content = content.replace(/ replaced(http-equiv="[^"]*")/gm, ' $1');
 
+    // Replace ` <!-- [if ` with the ` <!--[if `
+    content = content.replace(/<!--\s+\[if/gm, '<!--[if');
+
 
     // We already replace style and http-equiv and we don't need this.
     // content = content.replace(/ replaced([^= ]*=)/gm, ' $1');
