@@ -22,6 +22,10 @@
             label: Visible?;
             widget: boolean
         }
+        isFullWidth {
+            label: Full width;
+            widget: boolean
+        }
         color {
             label: Color;
             widget: color
@@ -300,6 +304,10 @@
         blockStyle {
             label: Block Styles;
             properties: marginTop marginBottom paddingTop paddingBottom borderWidth borderType borderColor radius;
+        }
+        blockWidthStyle {
+            label: Block Width Styles;
+            properties: isFullWidth;
         }
 
         /* Global border props and config */
@@ -2796,8 +2804,8 @@
                 <td class="vb-outer" align="center" valign="top" bgcolor="#bfbfbf"
                     style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
 
-                    <!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570"><tr><td align="center" valign="top"><![endif]-->
-                    <div class="oldwebkit">
+                    <!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570" style="-ko-attr-width: @[blockWidthStyle.isFullWidth ? '100%' : '570'];"><tr><td align="center" valign="top"><![endif]-->
+                    <div class="oldwebkit" style="max-width: 600px; -ko-max-width: @[blockWidthStyle.isFullWidth ? '100%' : '600px'];">
 
                         <!-- Margin table -->
                         <table data-ko-display="blockStyle.marginTop gt '0'" class="table-spacer" border="0" cellpadding="0" cellspacing="0" align="center"><tbody><tr><td
@@ -2805,7 +2813,7 @@
 
                         <!-- Block container table -->
                         <table class="vb-container fullwidth" border="0" cellpadding="0" cellspacing="0" width="570"
-                               style="width: 570px;">
+                               style="width: 570px; -ko-width: @[blockWidthStyle.isFullWidth ? '100%' : '570px']; -ko-attr-width: @[blockWidthStyle.isFullWidth ? '100%' : '570'];">
                             <tr>
                                 <td align="center" valign="top">
 
