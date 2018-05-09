@@ -653,6 +653,9 @@
           line-height: inherit !important;
         }
 
+        /* outlook/office365 add buttons outside not-linked images and safari have 2px margin */
+        [o365] button { margin: 0 !important; }
+
         /* outlook */
         table { mso-table-rspace: 0pt; mso-table-lspace: 0pt; }
         #outlook a { padding: 0; }
@@ -2464,6 +2467,7 @@
                                                        border-color: #ff0000; -ko-border-color: @[blockStyle.borderWidth gt 0 ? blockStyle.borderColor : 'transparent'];
                                                        border-radius: 0px; -ko-border-radius: @[blockStyle.radius]px;
                                                        background-color: #ffffff; -ko-background-color: @backgroundColor; -ko-attr-bgcolor: @backgroundColor;
+                                                       -ko-attr-data-url: @[fbUrl | twUrl | ggUrl | webUrl | inUrl | flUrl | viUrl | instUrl | youUrl | spotUrl | twitchUrl | soundclUrl | itunUrl];
                                                        "><tbody><tr><td valign="top" align="center" style="
                                                          padding-top: 0px; -ko-padding-top: @[blockStyle.paddingTop]px;
                                                          padding-bottom: 0px; -ko-padding-bottom: @[blockStyle.paddingBottom]px;">
