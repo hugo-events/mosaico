@@ -19,6 +19,7 @@ var _declarationValueLookup = function(declarations, propertyname, templateUrlCo
 };
 
 var _propToCamelCase = function(propName) {
+  //console.log('propName = ' + propName);
   return propName.replace(/-([a-z])/g, function(match, contents, offset, s) {
     return contents.toUpperCase();
   });
@@ -122,7 +123,7 @@ var elaborateDeclarations = function(style, declarations, templateUrlConverter, 
             }
             var bindDefaultValue = propDefaultValue;
 
-            var bindName = _propToCamelCase(propName);
+            var bindName = !isBind && !isAttr ? _propToCamelCase(propName) : (propName.indexOf('-') != -1 ? '\''+propName+'\'' : propName);
 
             try {
               bindValue = converterUtils.expressionBinding(declarations[i].value, bindingProvider, bindDefaultValue);
@@ -135,7 +136,7 @@ var elaborateDeclarations = function(style, declarations, templateUrlConverter, 
 
 
             // Special handling for HREFs
-            if (bindType == 'virtualAttr' && bindName == 'href') {
+            if (bindType == 'virtualAttr' && bindName == 'href' && element && element.tagName.toLowerCase() === 'a') {
               bindType = null;
               bindName = 'wysiwygHref';
               // We have to remove it, otherwise we ends up with 2 rules writing it.

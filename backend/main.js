@@ -1,5 +1,5 @@
 "use strict";
-/* global module: false, console: false, __dirname: false */
+/* global module: false, console: false, __dirname: false, process: false */
 
 var express = require('express');
 var upload = require('jquery-file-upload-middleware');
@@ -7,11 +7,13 @@ var bodyParser = require('body-parser');
 var fs = require('fs');
 var _ = require('lodash');
 var app = express();
-var gm = require('gm').subClass({imageMagick: true});
+var gmagic = require('gm');
+var gm = gmagic.subClass({imageMagick: true});
 var config = require('../server-config.js');
 var extend = require('util')._extend;
+var url = require('url');
 
-app.use(require('connect-livereload')({ ignore: [/^\/dl/] }));
+app.use(require('connect-livereload')({ ignore: [/^\/dl/, /^\/img/] }));
 // app.use(require('morgan')('dev'));
 
 app.use(bodyParser.json({limit: '5mb'}));
@@ -90,21 +92,26 @@ app.get('/img/', function(req, res) {
             if (x > params[0]) { x = 0; y = y + size*2; }
         }
         // text
-        out = out.fill('#B0B0B0').fontSize(20).drawText(0, 0, params[0] + ' x ' + params[1], 'center');
-        out.stream('png').pipe(res);
+        out.fill('#B0B0B0').fontSize(20).drawText(0, 0, params[0] + ' x ' + params[1], 'center').stream('png').pipe(res);
 
-    } else if (req.query.method == 'resize') {
-        var ir = gm(req.query.src);
+    } else if (req.query.method == 'resize' || req.query.method == 'cover') {
+        // NOTE: req.query.src is an URL but gm is ok with URLS.
+        // We do parse it to localpath to avoid strict "securityPolicy" found in some ImageMagick install to prevent the manipulation
+        var urlparsed = url.parse(req.query.src);
+        var src = "./"+decodeURI(urlparsed.pathname);
+
+        var ir = gm(src);
         ir.format(function(err,format) {
-            if (!err) res.set('Content-Type', 'image/'+format.toLowerCase());
-            ir.autoOrient().resize(params[0] == 'null' ? null : params[0], params[1] == 'null' ? null : params[1]).stream().pipe(res);
-        });
-
-    } else if (req.query.method == 'cover') {
-        var ic = gm(req.query.src);
-        ic.format(function(err,format) {
-            if (!err) res.set('Content-Type', 'image/'+format.toLowerCase());
-            ic.autoOrient().resize(params[0],params[1]+'^').gravity('Center').extent(params[0], params[1]+'>').stream().pipe(res);
+            if (!err) {
+                res.set('Content-Type', 'image/'+format.toLowerCase());
+                if (req.query.method == 'resize') {
+                    ir.autoOrient().resize(params[0] == 'null' ? null : params[0], params[1] == 'null' ? null : params[1]).stream().pipe(res);
+                } else {
+                    ir.autoOrient().resize(params[0],params[1]+'^').gravity('Center').extent(params[0], params[1]+'>').stream().pipe(res);
+                }
+            } else {
+                console.error("ImageMagick failed to detect image format for", src, ". Error:", err);
+            }
         });
 
     }
@@ -112,10 +119,7 @@ app.get('/img/', function(req, res) {
 });
 
 app.post('/dl/', function(req, res) {
-    var Styliner = require('styliner');
-    var styliner = new Styliner(__dirname, { keepinvalid: true });
-
-    styliner.processHTML(req.body.html).then(function(source) {
+    var response = function(source) {
         
         if (req.body.action == 'download') {
             res.setHeader('Content-disposition', 'attachment; filename=' + req.body.filename);
@@ -144,7 +148,24 @@ app.post('/dl/', function(req, res) {
             });
         }
         
-    });
+    };
+
+    response(req.body.html);
 });
 
-module.exports = app;
+
+// This is needed with grunt-express-server (while it was not needed with grunt-express)
+
+var PORT = process.env.PORT || 3000;
+
+app.use(express.static(__dirname + '/../'));
+
+var server = app.listen( PORT, function() {
+    var check = gm(100, 100, '#000000');
+    check.format(function (err, format) {
+        if (err) console.error("ImageMagick failed to run self-check image format detection. Error:", err);
+    });
+    console.log('Express server listening on port ' + PORT);
+} );
+
+// module.exports = app;

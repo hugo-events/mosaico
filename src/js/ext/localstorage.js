@@ -30,14 +30,28 @@ var lsCommandPluginFactory = function(md, emailProcessorBackend) {
       enabled: ko.observable(true)
     };
     saveCmd.execute = function() {
+
       saveCmd.enabled(false);
+      // Localstorage processing
       viewModel.metadata.changed = Date.now();
       if (typeof viewModel.metadata.key == 'undefined') {
-        console.warn("Unable to find ket in metadata object...", viewModel.metadata);
+        console.warn("Unable to find key in metadata object...", viewModel.metadata);
         viewModel.metadata.key = mdkey;
       }
       global.localStorage.setItem("metadata-" + mdkey, viewModel.exportMetadata());
       global.localStorage.setItem("template-" + mdkey, viewModel.exportJSON());
+
+      // HTML generation
+      viewModel.notifier.info(viewModel.t("Downloading..."));
+      viewModel.exportHTMLtoTextarea('#downloadHtmlTextarea');
+      var postUrl = emailProcessorBackend ? emailProcessorBackend : '/dl/' ;
+
+      global.document.getElementById('mosaico_json').value = viewModel.exportJSON();
+      // Set the action of the form
+      global.document.getElementById('downloadForm').setAttribute("action", postUrl);
+      
+      //Submit the form
+      global.document.getElementById('downloadForm').submit();
       saveCmd.enabled(true);
     };
     var testCmd = {

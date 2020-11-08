@@ -7,16 +7,6 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
 
-    makeThumbs: {
-      main: {
-        templates: './templates/*/*.html',
-        template: './templates/%/*.html',
-        outputFolder: 'edres',
-        renderWidth: 680,
-        outputWidth: 340
-      }
-    },
-
     combineKOTemplates: {
       main: {
         src: "src/tmpl/*.tmpl.html",
@@ -40,7 +30,7 @@ module.exports = function(grunt) {
 
     less: {
       options: {
-        sourceMap: true,
+        sourceMap: false,
         sourceMapRootpath: '../',
         /* sourceMapFilename: 'build/mosaico.css.map' */
         sourceMapFileInline: true
@@ -60,7 +50,7 @@ module.exports = function(grunt) {
         },
         diff: false,
         processors: [
-          require('autoprefixer-core')({
+          require('autoprefixer')({
             browsers: 'ie 10, last 2 versions'
           }),
           require('csswring')()
@@ -82,7 +72,7 @@ module.exports = function(grunt) {
           browserifyOptions: {
             standalone: 'Mosaico'
           },
-          watch: true,
+          cacheFile: 'build/debug-incremental.bin',
         },
         files: {
           'build/mosaico.js': ['./src/js/app.js', './build/templates.js']
@@ -96,7 +86,7 @@ module.exports = function(grunt) {
             standalone: 'Mosaico'
           },
           transform: ['uglifyify'],
-          watch: true,
+          cacheFile: 'build/main-incremental.bin',
         },
         files: {
           'build/mosaico.debug.js': ['./src/js/app.js', './build/templates.js']
@@ -124,6 +114,10 @@ module.exports = function(grunt) {
         files: ['src/tmpl/*.tmpl.html'],
         tasks: ['combineKOTemplates']
       },
+      browserify: {
+        files: ['src/js/**/*.js', 'build/templates.js'],
+        tasks: ['browserify', 'exorcise']
+      },
       exorcise: {
         files: ['build/mosaico.debug.js'],
         tasks: ['exorcise']
@@ -143,12 +137,9 @@ module.exports = function(grunt) {
     express: {
       dev: {
         options: {
+          script: 'backend/main.js',
+          background: true,
           port: 9006,
-          showStack: true,
-          hostname: '127.0.0.1',
-          open: true,
-          bases: ['.'],
-          server: 'backend/main.js'
         }
       }
     },
@@ -182,13 +173,12 @@ module.exports = function(grunt) {
           'jquery.fileupload-process.js': 'jquery-file-upload/js/jquery.fileupload-process.js',
           'jquery.fileupload-image.js': 'jquery-file-upload/js/jquery.fileupload-image.js',
           'jquery.fileupload-validate.js': 'jquery-file-upload/js/jquery.fileupload-validate.js',
-          'evol.colorpicker.min.css': 'evol-colorpicker/css/evol.colorpicker.min.css',
-          'evol.colorpicker.min.js': 'evol-colorpicker/js/evol.colorpicker.min.js',
           'tinymce.min.js': 'tinymce/tinymce.min.js',
           'themes': 'tinymce/themes',
           'skins': 'tinymce/skins',
           'plugins': 'tinymce/plugins',
           'notoregular': 'webfont-notosans/regular',
+          'plugins/smileys': 'Smileys/smileys'
         }
       },
       fontawesome: {
@@ -211,18 +201,18 @@ module.exports = function(grunt) {
           coverage: {
             reportDir: 'build/coverage',
           },
-          forceExit: false,
-          match: '.',
-          matchAll: false,
-          specFolders: ['spec'],
-          extensions: 'js',
-          specNameMatcher: 'spec',
+          forceExit: true,
           captureExceptions: true,
-          junitreport: {
-            report: false,
-            savePath: './build/jasmine/',
-            useDotNotation: true,
-            consolidate: true
+          jasmine: {
+            reporters: {
+              spec: {},
+              junitXml: {
+                report: false,
+                savePath: './build/jasmine/',
+                useDotNotation: true,
+                consolidate: true
+              }
+            }
           }
         },
         src: ['src/**/*.js']
@@ -233,7 +223,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('js', ['combineKOTemplates', 'browserify', 'exorcise']);
   grunt.registerTask('css', ['less', 'postcss']);
-  grunt.registerTask('server', ['express', 'watch', 'express-keepalive']);
+  grunt.registerTask('server', ['express', 'watch', 'keepalive']);
   grunt.registerTask('build', ['bowercopy', 'copy', 'jshint', 'js', 'css']);
   grunt.registerTask('default', ['build', 'server']);
   grunt.registerTask('test', ['jasmine_node']);
