@@ -423,6 +423,7 @@
         socialBlock twitchVisible { label: Twitch }
         socialBlock soundclVisible { label: SoundCloud }
         socialBlock itunVisible { label: iTunes }
+        socialBlock tiktokVisible { label: TikTok }
         socialBlock fbUrl { label: Facebook Link}
         socialBlock twUrl { label: Twitter Link}
         socialBlock ggUrl { label: Google+ Link}
@@ -436,9 +437,10 @@
         socialBlock twitchUrl { label: Twitch Link }
         socialBlock soundclUrl { label: SoundCloud Link }
         socialBlock itunUrl { label: iTunes Link }
+        socialBlock tiktokUrl { label: TikTok Link }
         socialBlock {
             label: Social Block;
-            properties: socialIconType=bw addressSocialVisible=true fbVisible=true fbUrl twVisible=true twUrl ggVisible=true ggUrl webVisible=false webUrl inVisible=false inUrl flVisible=false flUrl viVisible=false viUrl instVisible=false instUrl youVisible=false youUrl spotVisible=false spotUrl twitchVisible=false twitchUrl soundclVisible=false soundclUrl itunVisible=false itunUrl longTextStyle longText backgroundColor;
+            properties: socialIconType=bw addressSocialVisible=true fbVisible=true fbUrl twVisible=true twUrl ggVisible=true ggUrl webVisible=false webUrl inVisible=false inUrl flVisible=false flUrl viVisible=false viUrl instVisible=false instUrl youVisible=false youUrl spotVisible=false spotUrl twitchVisible=false twitchUrl soundclVisible=false soundclUrl itunVisible=false itunUrl tiktokVisible=false tiktokUrl longTextStyle longText backgroundColor;
             variant:socialIconType;
             theme: contentTheme
         }
@@ -2474,7 +2476,7 @@
                                                        border-color: #ff0000; -ko-border-color: @[blockStyle.borderWidth gt 0 ? blockStyle.borderColor : 'transparent'];
                                                        border-radius: 0px; -ko-border-radius: @[blockStyle.radius]px;
                                                        background-color: #ffffff; -ko-background-color: @backgroundColor; -ko-attr-bgcolor: @backgroundColor;
-                                                       -ko-attr-data-url: @[fbUrl | twUrl | ggUrl | webUrl | inUrl | flUrl | viUrl | instUrl | youUrl | spotUrl | twitchUrl | soundclUrl | itunUrl];
+                                                       -ko-attr-data-url: @[fbUrl | twUrl | ggUrl | webUrl | inUrl | flUrl | viUrl | instUrl | youUrl | spotUrl | twitchUrl | soundclUrl | itunUrl | tiktokUrl];
                                                        "><tbody><tr><td valign="top" align="center" style="
                                                          padding-top: 0px; -ko-padding-top: @[blockStyle.paddingTop]px;
                                                          padding-bottom: 0px; -ko-padding-bottom: @[blockStyle.paddingBottom]px;">
@@ -2569,6 +2571,10 @@
                                                                   <img src="img/social_def/itunes_modern.png" alt="iTuned" border="0" class="socialIcon" />
                                                               </a>
 
+                                                              <span data-ko-display="tiktokVisible" data-ko-wrap="false" style="display: none">&nbsp;</span>
+                                                              <a data-ko-display="tiktokVisible" href="" style="-ko-attr-href: @tiktokUrl; display: none">
+                                                                  <img src="img/social_def/tiktok_modern.png" alt="TikTok" border="0" class="socialIcon" />
+                                                              </a>
                                                           </td>
                                                           <td align="center" valign="middle" class="links-color socialLinks mobile-textcenter"
                                                               data-ko-display="socialIconType eq 'bw'"
@@ -2639,6 +2645,10 @@
                                                                   <img src="img/social_def/itunes_black_modern.png" alt="iTuned" border="0" class="socialIcon" />
                                                               </a>
 
+                                                              <span data-ko-display="tiktokVisible" data-ko-wrap="false" style="display: none">&nbsp;</span>
+                                                              <a data-ko-display="tiktokVisible" href="" style="-ko-attr-href: @tiktokUrl; display: none">
+                                                                  <img src="img/social_def/tiktok_black_modern.png" alt="TikTok" border="0" class="socialIcon" />
+                                                              </a>
                                                           </td>
                                                           <td align="center" valign="middle" class="links-color socialLinks mobile-textcenter"
                                                               data-ko-display="socialIconType eq 'gray'"
@@ -2709,6 +2719,10 @@
                                                                   <img src="img/social_def/itunes_bw_modern.png" alt="iTuned" border="0" class="socialIcon" />
                                                               </a>
 
+                                                              <span data-ko-display="tiktokVisible" data-ko-wrap="false" style="display: none">&nbsp;</span>
+                                                              <a data-ko-display="tiktokVisible" href="" style="-ko-attr-href: @tiktokUrl; display: none">
+                                                                  <img src="img/social_def/tiktok_bw_modern.png" alt="TikTok" border="0" class="socialIcon" />
+                                                              </a>
                                                           </td>
                                                           <td align="center" valign="middle" class="links-color socialLinks mobile-textcenter"
                                                               data-ko-display="socialIconType eq 'white'"
@@ -2779,6 +2793,10 @@
                                                                   <img src="img/social_def/itunes_white_modern.png" alt="iTuned" border="0" class="socialIcon" />
                                                               </a>
 
+                                                              <span data-ko-display="tiktokVisible" data-ko-wrap="false" style="display: none">&nbsp;</span>
+                                                              <a data-ko-display="tiktokVisible" href="" style="-ko-attr-href: @tiktokUrl; display: none">
+                                                                  <img src="img/social_def/tiktok_white_modern.png" alt="TikTok" border="0" class="socialIcon" />
+                                                              </a>
                                                           </td>
                                                       </tr>
                                                   </table>
