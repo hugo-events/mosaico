@@ -88,6 +88,9 @@
   "dependencies": {
     "grunt-cli": "^1.4.1"
   },
+  "overrides": {
+    "graceful-fs": "^4.2.11"
+  },
   "resolutions": {
     "graceful-fs": "^4.2.11"
   }
