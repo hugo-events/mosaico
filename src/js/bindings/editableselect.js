@@ -1,9 +1,8 @@
 "use strict";
 /* global global: false, console, setTimeout */
 
-var select2 = require("select2");
-
 var $ = require("jquery");
+var select2 = require("select2");
 var ko = require("knockout");
 var kojqui = require("knockout-jqueryui");
 
