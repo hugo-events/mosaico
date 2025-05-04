@@ -183,7 +183,7 @@ ko.bindingHandlers['fileupload'] = {
   remoteFilePreprocessor: function(url) { return url; },
   init: function(element, valueAccessor) {
     // TODO domnodedisposal doesn't work when the upload is done by "clicking"
-    // Probably jquery-fileupload moves the DOM somewhere else so that KO doesn't 
+    // Probably jquery-fileupload moves the DOM somewhere else so that KO doesn't
     // detect the removal anymore.
     ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
       $(element).fileupload('destroy');
@@ -215,8 +215,9 @@ ko.bindingHandlers['fileupload'] = {
       dataType: 'json',
       dropZone: $parent.find('.mo-uploadzone')[0],
       autoUpload: true,
-      acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-      maxFileSize: 1024 * 1024,
+      loadImageFileTypes: /^image\/(gif|jpe?g|png|webp)$/,
+      acceptFileTypes: /^image\/(gif|jpe?g|png|webp)$/,
+      maxFileSize: 10 * 1024 * 1024,
       // Enable image resizing, except for Android and Opera,
       // which actually support image resizing, but fail to
       // send Blob objects via XHR requests:
@@ -336,16 +337,18 @@ ko.bindingHandlers['fileupload'] = {
       if (e.type == 'fileuploadprocessalways') {
         var index = data.index,
           file = data.files[index];
-        if (file.preview && index === 0) {
-          // if we have a canvas we had multiple uploaded files
-          if ($parent.find('canvas').length === 0) {
-            if (canvasPreview) {
-              var el = $(file.preview).css('width', '100%'); // .css('position', 'absolute').css('left', '0');
-              $parent.find('img').hide();
-              $parent.prepend(el);
+        if (index === 0) {
+          $parent.addClass("uploading");
+          $parent.find('.progress-bar').css('width', 0);
+          if (file.preview) {
+            // if we have a canvas we had multiple uploaded files
+            if ($parent.find('canvas').length === 0) {
+              if (canvasPreview) {
+                var el = $(file.preview).css('width', '100%'); // .css('position', 'absolute').css('left', '0');
+                $parent.find('img').hide();
+                $parent.prepend(el);
+              }
             }
-            $parent.addClass("uploading");
-            $parent.find('.progress-bar').css('width', 0);
           }
         }
         if (file.error) {

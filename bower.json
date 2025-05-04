@@ -9,29 +9,33 @@
     "tests"
   ],
   "dependencies": {
-    "knockout-sortable": "~0.11.0",
+    "knockout-sortable": "~0.15.0",
     "jqueryui-touch-punch": "*",
-    "jquery-file-upload": "~9.8.0",
-    "jquery": "~1.11.2",
-    "jquery-ui": "~1.11.3",
-    "blueimp-load-image": "~1.13.0",
-    "blueimp-canvas-to-blob": "~2.1.1",
-    "knockoutjs-reactor": "ZiadJ/knockoutjs-reactor#273d140ce28e7cecf0f573a605d259e22cbfc319",
-    "knockout-jqueryui": "bago/knockout-jqueryui#9452901885186c94f97b34535374cbe31405a882",
-    "mensch": "brettstimmerman/mensch#~0.3.2",
+    "jquery-file-upload": "~9.19.1",
+    "jquery": "~1.12.4",
+    "jquery-ui": "~1.11.4",
+    "blueimp-load-image": "~2.17.0",
+    "blueimp-canvas-to-blob": "~3.14.0",
+    "knockoutjs-reactor": "ZiadJ/knockoutjs-reactor#~1.4.0-beta",
+    "knockout-jqueryui": "gvas/knockout-jqueryui#~2.2.3",
+    "mensch": "~0.3.3",
     "toastr": "~2.1.0",
-    "knockout-undomanager": "bago/knockout-undomanager#v0.2.1",
+    "knockout-undomanager": "~0.2.1",
     "knockout.wrap": "bago/knockout.wrap#mosaico",
     "jquery.iframe-transport": "~1.0.0",
-    "tinymce": "~4.3.2",
-    "knockout": "~3.4.0",
-    "console-browserify": "Raynos/console-browserify#~1.0.3",
-    "font-awesome": "~4.3.0",
-    "blueimp-file-upload": "~9.9.3",
+    "tinymce": "~4.7.2",
+    "knockout": "3.4.0 - 3.4.2",
+    "console-browserify": "~1.0.3",
+    "font-awesome": "~4.7.0",
+    "blueimp-file-upload": "~9.19.1",
     "evol-colorpicker": "bago/colorpicker#mosaico",
-    "jsep": "~0.3.0",
-    "tinycolor": "~1.2.1",
-    "webfont-notosans": "~0.1.0"
+    "jsep": "~0.3.1",
+    "juice": "Automattic/juice#~3.0.1",
+    "slick": "kamicane/slick#~1.12.2",
+    "tinycolor": "~1.4.1",
+    "webfont-notosans": "~0.1.0",
+    "Smileys": "nhammadi/Smileys",
+    "select2": "^4.0.5"
   },
   "overrides": {
     "console-browserify": {
@@ -53,9 +57,6 @@
         "js/jquery.fileupload-image.js"
       ]
     },
-    "jsep": {
-      "main": "src/jsep.js"
-    },
     "knockout-sortable": {
       "dependencies": {
         "knockout": ">=3.0.0"
@@ -66,14 +67,9 @@
         "jquery-ui": ">=1.8.0"
       },
       "main": "jquery.ui.touch-punch.min.js"
-    },
-    "mensch": {
-      "main": [
-        "index.js"
-      ]
     }
   },
   "resolutions": {
-    "knockout": "~3.4.0"
+    "knockout": "3.4.1"
   }
 }
