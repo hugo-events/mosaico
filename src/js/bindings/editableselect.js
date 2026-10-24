@@ -49,7 +49,9 @@ EditableSelect.prototype.init = function(element, valueAccessor, allBindings) {
       $(element).select2(opt);
       setTimeout(function(){
         var val = ko.utils.unwrapObservable(newDO);
-        $(element).append('<option value="' + val + '" data-select2-tag="true">' + val + '</option>');
+        // the value is the content's, so it is text, never HTML (HUG-957)
+        var text = val === null || val === undefined ? '' : String(val);
+        $(element).append($('<option>').attr({ value: text, 'data-select2-tag': 'true' }).text(text));
         $(element).val(val).trigger("change");
         $(element).on("change", changePropagator);
       }, 0);

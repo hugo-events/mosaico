@@ -128,9 +128,9 @@
 
 </style>
 <div class="saveArea">
-  <form onsubmit="return false;" id="downloadForm" action="#" method="POST" target='_parent'>
+  <form id="downloadForm" action="#" method="POST" target='_parent'>
     <div class="leftArea">
-      <label data-bind="text: $root.t($root.save.label)+': '" for="template_name"/>
+      <label data-bind="text: $root.t($root.save.label)+': '" for="template_name"></label>
       <input data-bind="value: $root.save.title" name="template_name" id="template_name" type="text">
     </div>
     <div class="rightArea">

@@ -4,6 +4,17 @@
 require("evol-colorpicker");
 
 var $ = require("jquery");
+
+// The web palette closes its separator with <div class="evo-sep"/>, which only jQuery before 3.5
+// rewrote into <div class="evo-sep"></div>; the HTML parser opens a div there that swallows the
+// palette after it. Sendy turns that rewrite off (it made checked content parse differently,
+// CVE-2020-11022), so the picker's own HTML closes the div (HUG-957).
+(function(proto) {
+  var webPalette = proto._paletteHTML2;
+  proto._paletteHTML2 = function() {
+    return webPalette.apply(this, arguments).split('<div class="evo-sep"/>').join('<div class="evo-sep"></div>');
+  };
+})($.evol.colorpicker.prototype);
 var ko = require("knockout");
 var kojqui = require("knockout-jqueryui");
 
