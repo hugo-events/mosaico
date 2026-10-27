@@ -82,12 +82,14 @@ ko.bindingHandlers['virtualHtml'] = {
           html = html.toString();
         }
 
-        var parsedNodes = ko.utils.parseHtmlFragment(html);
-        if (parsedNodes) {
-          var endCommentNode = element.nextSibling;
-          for (var i = 0, j = parsedNodes.length; i < j; i++)
-            endCommentNode.parentNode.insertBefore(parsedNodes[i], endCommentNode);
-        }
+        // A brand's content, parsed as Sendy checked it (HUG-957): innerHTML in a div, never
+        // ko.utils.parseHtmlFragment, which is jQuery's parseHTML and parses a string starting with
+        // <option> inside <select multiple> (CVE-2020-11023), so checked text can become an element.
+        var container = element.ownerDocument.createElement('div');
+        container.innerHTML = html;
+        var endCommentNode = element.nextSibling;
+        while (container.firstChild)
+          endCommentNode.parentNode.insertBefore(container.firstChild, endCommentNode);
       }
     } else { // plain node
       ko.bindingHandlers['html'].update(element, valueAccessor);

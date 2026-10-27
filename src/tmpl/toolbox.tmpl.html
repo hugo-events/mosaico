@@ -100,8 +100,6 @@
       <!-- ko if: $root.galleryLoaded() === 'loading' --><div class="galleryEmpty" data-bind="text: $root.t('Loading gallery...')">Loading gallery...</div><!-- /ko -->
       <!-- ko if: $root.galleryLoaded() === 0 --><div class="galleryEmpty" data-bind="text: $root.t('The gallery is empty')">The gallery is empty</div><!-- /ko -->
       <!-- ko template: {name: 'gallery-images', data: { items: galleryRemote } } --># remote gallery #<!-- /ko -->
-      <img width="180" src="https://aviarystatic.s3.amazonaws.com/creativesdk/branding/CC_connected_horizontal_badge_blk.svg"
-           style="position: relative; right: -110px; bottom: -15px;">
     </div>
   </div>
   <!-- /ko -->
