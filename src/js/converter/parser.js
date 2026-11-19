@@ -386,9 +386,8 @@ function conditional_replace(html) {
     var dd = '<!-- cc:start -->';
     dd += body.replace(/<([A-Za-z:]+)/g, '<!-- cc:bo:$1 --><cc') // before open tag
            .replace(/<\/([A-Za-z:]+)>/g,'<!-- cc:bc:$1 --></cc><!-- cc:ac:$1 -->') // before/after close tag
-           // self-close tag: closed here, as conditional_restore expects it. HTML has no <x/>, and the
-           // editor's jQuery no longer rewrites one into <x></x> (Sendy's jquery-safe.js, HUG-957):
-           // left as <cc/>, the placeholder stayed open and its marker ended the comment early (HUG-1050)
+           // self-close tag, written closed: the parser keeps <cc/> open (Sendy's jquery-safe.js turns
+           // off jQuery's <x/> rewrite), and conditional_restore matches ></cc><!-- cc:sc -->
            .replace(/\/>/g,'></cc><!-- cc:sc -->');
     dd += '<!-- cc:end -->';
     var output = '<replacedcc condition="'+condition+'" style="display: none">';

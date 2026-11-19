@@ -439,6 +439,7 @@ function initializeEditor(content, blockDefs, thumbPathConverter, galleryUrl) {
       dd += body.replace(/<!-- cc:bc:([A-Za-z:]*) -->(<\/cc>)?<!-- cc:ac:\1 -->/g, '</$1>') // restore closing tags (including lost tags)
             .replace(/><\/cc><!-- cc:sc -->/g, '/>') // restore selfclosing tags
             .replace(/<!-- cc:bo:([A-Za-z:]*) --><cc/g, '<$1') // restore open tags
+            .replace(/<!-- cc:(?:bo|bc|ac|sc)(?::[A-Za-z:]*)? -->/g, '') // markers of an element a binding removed: a --> inside the comment would end it
             .replace(/^.*<!-- cc:start -->/,'') // remove content before start
             .replace(/<!-- cc:end -->.*$/,''); // remove content after end
       dd += '<![endif]-->';
